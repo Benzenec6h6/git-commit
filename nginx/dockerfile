@@ -1,0 +1,4 @@
+FROM nginx:latest
+
+# ローカルのdefault.confをコンテナにコピー
+COPY nginx/conf/*.conf /etc/nginx/conf.d/

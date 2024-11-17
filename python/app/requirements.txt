@@ -1,0 +1,8 @@
+fastapi
+python-multipart
+pydantic
+uvicorn
+jinja2
+websockets
+pymysql
+cryptography

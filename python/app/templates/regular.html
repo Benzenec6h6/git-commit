@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="/static/css/regular.css">
+        <script id="import">{{sch}}</script>
+        <title>config</title>
+    </head>
+    <body>
+        <h1>定期設定</h1>
+        <form action="/set" method="post">
+        <div id="content0">
+        <p>分
+        <select id="min" name="set">
+            <option>*</option>
+            {% for i in range(60) %}
+                <option>{{i}}</option>
+            {% endfor %}
+        </select>
+        </p>
+        <p>時
+            <select id="hour" name="set">
+                <option>*</option>
+                {% for i in range(24) %}
+                    <option>{{i}}</option>
+                {% endfor %}
+            </select>
+        </p>
+        <p>日
+            <select id="day" name="set">
+                <option>*</option>
+                {% for i in range(1,32) %}
+                    <option>{{i}}</option>
+                {% endfor %}
+            </select>
+        </p>
+        <p>月
+            <select id="month" name="set">
+                <option>*</option>
+                {% for i in range(1,13) %}
+                    <option>{{i}}</option>
+                {% endfor %}
+            </select>
+        </p>
+        <p>曜日
+            <select id="week" name="set">
+                <option value="*">*</option>
+                <option value="0">日曜日</option>
+                <option value="1">月曜日</option>
+                <option value="2">火曜日</option>
+                <option value="3">水曜日</option>
+                <option value="4">木曜日</option>
+                <option value="5">金曜日</option>
+                <option value="6">土曜日</option>
+            </select>
+        </p>
+        <p>実行する対象
+            <select id="company" name="set">
+                <option value="rakuten">楽天</option>
+                <option value="gmoclick">クリック</option>
+                <option value="matsui">松井</option>
+                <option value="SBI">SBI</option>
+            </select>
+        </p>
+        </div>
+        <input type="button" value="追加" onclick=add()>
+        <input type="button" value="削除" onclick=del()>
+        <input type="submit" value="設定">
+        </form>
+        <script src="{{url_for('static',filename='javascript/regular.js')}}"></script>
+    </body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link href="/static/css/manual.css" rel="stylesheet">
+        <title>config</title>
+    </head>
+    <body>
+        <h1>手動実行</h1>
+        <form action="/execution" method="post">
+            <select name="exe">
+                <option value="rakuten">楽天</option>
+                <option value="gmoclick">クリック</option>
+                <option value="matsui">松井</option>
+                <option value="SBI">SBI</option>
+            </select>
+            {% if msg == 'start' or msg == 'completed!' %}
+            <input type="submit" value="実行">
+            {% else %}
+            <input type="submit" value="実行" disabled>
+            {% endif %}
+        </form>
+        {% if msg == 'rakuten' %}
+        <p>楽天から情報を取得中</p>
+        <p>実行完了まで実行ボタンを押さないで下さい。</p>
+        <a  href="../scraping" target="_blank" rel="noopener noreferrer">実行状況はここをクリックで確認</a>
+        {% elif msg == 'gmoclick' %}
+        <p>クリックから情報を取得中</p>
+        <p>実行完了まで実行ボタンを押さないで下さい。</p>
+        <a  href="../scraping" target="_blank" rel="noopener noreferrer">実行状況はここをクリックで確認</a>
+        {% elif msg == 'matsui' %}
+        <p>松井から情報を取得中</p>
+        <p>実行完了まで実行ボタンを押さないで下さい。</p>
+        <a  href="../scraping" target="_blank" rel="noopener noreferrer">実行状況はここをクリックで確認</a>
+        {% elif msg == 'SBI' %}
+        <p>SBIから情報を取得中</p>
+        <p>実行完了まで実行ボタンを押さないで下さい。</p>
+        <a  href="../scraping" target="_blank" rel="noopener noreferrer">実行状況はここをクリックで確認</a>
+        {% elif msg == 'completed!' %}
+        <p>実行完了</p>
+        {% elif msg == 'start' %}
+        <p></p>
+        {% else %}
+        <p>エラー実行できませんでした。</p>
+        <p>{{msg}}</p>
+        {% endif %}
+    </body>
+</html>

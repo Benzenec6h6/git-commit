@@ -1,0 +1,72 @@
+services:
+  db:
+      build:
+        context: .
+        dockerfile: ./db/dockerfile
+      volumes:
+        - completed_db-store:/var/lib/mysql
+        - ./db/mysql_init/init.sql:/docker-entrypoint-initdb.d/init.sql
+        - ./db/mysql_conf/my.cnf:/etc/mysql/conf.d/my.cnf
+      environment:
+          MYSQL_DATABASE: pass_manage
+          MYSQL_USER: flaskapp
+          MYSQL_PASSWORD: root
+          MYSQL_ROOT_PASSWORD: root
+          TZ: Asia/Tokyo
+      ports:
+        - 3305:3306
+  python38:
+    build:
+      context: ./
+      dockerfile: "./python/dockerfile"
+    container_name: "app_python"
+    working_dir: /var/www/app
+    restart: always
+    volumes:
+      - ./python/app:/var/www/app
+    
+
+  nginx:
+    container_name: "app_nginx"
+    # NginxのDockerfileをビルドする
+    build:
+      # ビルドコンテキストはカレントディレクトリ
+      context: ./
+      dockerfile: "./nginx/dockerfile"
+    volumes:
+      - ./nginx/conf:/etc/nginx/conf.d
+      - ./nginx/log:/var/log/nginx
+    restart: always
+    depends_on:
+      - python38
+      - db
+    ports:
+      - "8000:80"
+  selenium:
+    image: selenium/standalone-chrome:latest
+    ports:
+      - 4444:4444
+      - 7900:7900
+    volumes:
+    - /dev/shm:/dev/shm
+  selenium-chrome:
+    build:
+      context: .
+      dockerfile: ./scraping/dockerfile
+    ports:
+      - 8888:8888
+      - 8010:8000
+    volumes:
+      - scraping:/app
+      #- cron:/etc/cron.d
+    depends_on:
+    - db
+    environment:
+      SELENIUM_URL: http://selenium:4444/wd/hub
+    tty: true
+
+volumes:
+  completed_db-store:
+    external: true
+  scraping:
+  #cron:

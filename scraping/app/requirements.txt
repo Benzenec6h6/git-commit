@@ -1,0 +1,12 @@
+selenium
+BeautifulSoup4
+numpy
+pandas
+pyocr
+Pillow
+pymysql
+python-crontab
+cryptography
+google-auth-oauthlib
+google-api-python-client
+urllib3
